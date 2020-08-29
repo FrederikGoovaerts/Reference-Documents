@@ -9,15 +9,7 @@ module.exports = {
   projectName: "Guides", // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: "Tutoring",
-      items: [
-        {
-          to: "docs/",
-          activeBasePath: "Documentation",
-          label: "Docs",
-          position: "left",
-        },
-      ],
+      title: "Tutoring documents",
     },
   },
   presets: [
