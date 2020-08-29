@@ -8,3 +8,81 @@ This document aims to be a reference when setting up a project from scratch that
 
 - It uses `npm` as a project tool
 - It is a git repository
+- The source code is written in TypeScript
+- Linting with ESLint is present
+- Unit tests are present using the Jest framework
+- The source code can be transpiled and bundled using Rollup
+
+## Prerequisites
+
+See the [general prerequisites](/docs#general-prerequisites-for-practical-guides).
+
+## Creating a project folder
+
+In the development folder, use the `mkdir` command to create an empty folder and navigate to it in your terminal.
+
+```
+mkdir nodejs-project-setup
+cd nodejs-project-setup
+```
+
+## Create git repository
+
+Full reference material [here](https://git-scm.com/book/en/v2).
+
+Setup up a new repository on a git repository provider of your choice (e.g. Github). We will push a locally created repository to the cloud provider instead of cloning a template repository, so make sure not to add any contents (e.g. README.md or gitignore) when creating the repository online.
+
+After doing so, take note of the upstream URL. Then initialize an empty git repository in your new directory:
+
+```
+git init
+```
+
+Using `git status` should now tell you you are in a git repository on the `master` branch.
+
+Add your upstream URL to the local repostory:
+
+```
+git remote add origin *upstream URL*
+```
+
+Add a `.gitignore` file with the following contents:
+
+```
+node_modules/
+dist/
+```
+
+and make and push your first commit:
+
+```
+git add .gitignore
+git commit -m "First commit"
+git push -u origin master
+```
+
+Verify that your commit is correctly present on the repository provider. From now on, it is up to the reader to commit the necessary project files at regular intervals and push them.
+
+## Creating an `npm` project
+
+Full reference documentation [here](https://docs.npmjs.com/cli-documentation/).
+
+Initialize a new `npm` project by running the following command and completing the prompts (when unsure, the defaults are sane and can be changed later):
+
+```
+npm init
+```
+
+Create an empty `package-lock.json` by doing an `npm install` if desired. We'll first add some simple code. Create a `src` folder in your new project folder, and add a `src/index.js` file with the following contents:
+
+```js
+const three = 3;
+
+console.log(`The number is ${three}`);
+```
+
+Now add a new "script" in your `package.json`, called `start`. It should execute `node src/index.js`, which runs the code we just wrote in a Node.js runtime. You should now be able to run your code with
+
+```
+npm run start
+```
