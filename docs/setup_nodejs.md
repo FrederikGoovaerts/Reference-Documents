@@ -9,9 +9,9 @@ This document aims to be a reference when setting up a project from scratch that
 - It uses `npm` as a project tool
 - It is a git repository
 - The source code is written in TypeScript
-- Linting with ESLint is present
 - Unit tests are present using the Jest framework
 - The source code can be transpiled and bundled using Rollup
+- Linting with ESLint is present
 
 ## Prerequisites
 
@@ -102,3 +102,82 @@ npx tsc --init
 ```
 
 Now change the extension on the `src/index.js` for to `.ts`. The "start" script will not work anymore since there is no more JavaScript code in our project to run in the Node.js runtime. We will use a TypeScript-compatible runtime called `ts-node` to run TypeScript code without transpiling first. Change the "start" script to `ts-node src/index.ts`. The script should now run the code again. Feel free to add some TypeScript-only constructs like typings to the `src/index.ts` file to make sure it cannot run in a normal Node.js runtime.
+
+## Adding unit tests
+
+Jest reference documentation [here](https://jestjs.io/docs/en/getting-started.html).
+`ts-jest` reference documentation [here](https://kulshekhar.github.io/ts-jest/).
+
+We'll introduce unit testing with the Jest framework. There are other options (Jasmine, Mocha), feel free to try setting those up yourself. Since we're using typescript, we'll have to decide to take [one of two approaches](https://jestjs.io/docs/en/getting-started.html#using-typescript): Using Babel to transpile the tests to JavaScript first and then running them in the normal Jest runtime, or using the `ts-jest` runner, which uses `ts-node` to typecheck and run the TypeScript tests. We'll go for the second option, but once again, feel free to explore the alternative yourself.
+
+Install the necessary dependencies and create a basic config file:
+
+```
+npm install -D jest ts-jest @types/jest
+npx ts-jest config:init
+```
+
+Now edit the "test" script in your `package.json` file to run the `jest` commmand. You can run this script with the shorthand `npm t` instead of `npm run test` if you want. Running the script now should throw an error that no tests are present which is indeed the case.
+
+By default, `ts-jest` tries to find and run all files ending in `.spec` or `.test`, following by the extensions `.js(x)` or `.ts(x)`. Create a `test` directory and inside, create a `example.spec.ts` file with the following trivial contents:
+
+```ts
+describe("TypeScript", () => {
+  it("should be able to sum two numbers", () => {
+    const first: number = 1;
+    const second: number = 2;
+    expect(first + second).toEqual(3);
+  });
+});
+```
+
+Running the "test" script now will run your new test suite and succeed.
+
+## Bundling the application with Rollup
+
+Full Rollup reference [here](https://rollupjs.org/guide/en/).
+
+At some point, we might want to deploy the application somewhere, and bundling helps, since it outputs one JavaScript file containing the whole application which can be run on any Node.js-capable system without having to set up and installing the project and dependencies.
+
+Before getting in to setting up rollup, we will add a dependency to our application to verify correct bundling:
+
+```
+npm i lodash
+npm i -D @types/lodash
+```
+
+Now change the contents of `src/index.ts` to the following to use the new dependency:
+
+```ts
+import flatten from "lodash/flatten";
+
+console.log(
+  `expecting ${JSON.stringify(flatten(["a", ["b"]]))} to result in ["a","b"]`
+);
+```
+
+Now install Rollup and necessary dependencies into the project with:
+
+```
+npm install -D rollup @rollup/plugin-commonjs @rollup/plugin-node-resolve @rollup/plugin-typescript tslib
+```
+
+We'll now introduce a Rollup config file, which uses the [Rollup TypeScript plugin](https://github.com/rollup/plugins/tree/master/packages/typescript) to transform our TypeScript file(s) and any used dependencies into one JavaScript file.
+
+Create a `rollup.config.js` file in the root of the project with the following contents:
+
+```js
+import typescript from "@rollup/plugin-typescript";
+
+export default {
+  input: "src/index.ts",
+  output: {
+    file: "bundle.js",
+    dir: "dist",
+    format: "cjs",
+  },
+  plugins: [typescript()],
+};
+```
+
+and add a "build" script to your `package.json` which runs `rollup -c ./rollup.config.js`.
