@@ -156,6 +156,8 @@ console.log(
 );
 ```
 
+Since we are using ES6 import syntax, you should change the `module` value in the `compilerOptions` of `tsconfig.json` to `es2015` or a more recent variant. This is important when the bundler resolves imports.
+
 Now install Rollup and necessary dependencies into the project with:
 
 ```
@@ -167,17 +169,18 @@ We'll now introduce a Rollup config file, which uses the [Rollup TypeScript plug
 Create a `rollup.config.js` file in the root of the project with the following contents:
 
 ```js
+import commonJs from "@rollup/plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 
 export default {
   input: "src/index.ts",
   output: {
-    file: "bundle.js",
-    dir: "dist",
+    file: "dist/bundle.js",
     format: "cjs",
   },
-  plugins: [typescript()],
+  plugins: [resolve(), commonJs(), typescript()],
 };
 ```
 
-and add a "build" script to your `package.json` which runs `rollup -c ./rollup.config.js`.
+and add a "build" script to your `package.json` which runs `rollup -c ./rollup.config.js`. Running this script will output a `dist/bundle.js` file, which you can run with `node ./dist/bundle.js`. As mentioned before, it will run on any Node.js-capable system without the need of installing dependencies, having a TypeScript runtime...
