@@ -136,14 +136,15 @@ Running the "test" script now will run your new test suite and succeed.
 ## Bundling the application with Rollup
 
 Full Rollup reference [here](https://rollupjs.org/guide/en/).
+Rollup plugin reference [here](https://github.com/rollup/plugins).
 
 At some point, we might want to deploy the application somewhere, and bundling helps, since it outputs one JavaScript file containing the whole application which can be run on any Node.js-capable system without having to set up and installing the project and dependencies.
 
 Before getting in to setting up rollup, we will add a dependency to our application to verify correct bundling:
 
 ```
-npm i lodash
-npm i -D @types/lodash
+npm install lodash
+npm install -D @types/lodash
 ```
 
 Now change the contents of `src/index.ts` to the following to use the new dependency:
@@ -164,7 +165,7 @@ Now install Rollup and necessary dependencies into the project with:
 npm install -D rollup @rollup/plugin-commonjs @rollup/plugin-node-resolve @rollup/plugin-typescript tslib
 ```
 
-We'll now introduce a Rollup config file, which uses the [Rollup TypeScript plugin](https://github.com/rollup/plugins/tree/master/packages/typescript) to transform our TypeScript file(s) and any used dependencies into one JavaScript file.
+We'll now introduce a Rollup config file, which uses the three plugins to transform our TypeScript file(s) and any used dependencies into one JavaScript file. Check the documentation of each of these plugins to understand why they are necessary.
 
 Create a `rollup.config.js` file in the root of the project with the following contents:
 
@@ -183,4 +184,57 @@ export default {
 };
 ```
 
-and add a "build" script to your `package.json` which runs `rollup -c ./rollup.config.js`. Running this script will output a `dist/bundle.js` file, which you can run with `node ./dist/bundle.js`. As mentioned before, it will run on any Node.js-capable system without the need of installing dependencies, having a TypeScript runtime...
+Add a "build" script to your `package.json` which runs `rollup -c ./rollup.config.js`. Running this script will output a `dist/bundle.js` file, which you can run with `node ./dist/bundle.js`. As mentioned before, it will run on any Node.js-capable system without the need of installing dependencies, having a TypeScript runtime etc.
+
+## Add linting with ESLint
+
+ESLint reference [here](https://eslint.org/docs/user-guide/getting-started).
+
+We will introduce [linting](<https://en.wikipedia.org/wiki/Lint_(software)>) for the source code by setting up ESLint (which is the standard linter for JS and TS nowadays) with the [`typescript-eslint`](https://github.com/typescript-eslint/typescript-eslint) plugin. As you may gather from the name, it is originally created to lint ECMAScript, so we use the aforementioned plugin to add TypeScript compatibility.
+
+Add the basic ESLint dependency and use the init tool to install extra dependencies and add a default configuration file by following the prompts:
+
+```
+npm install -D eslint
+npx eslint --init
+```
+
+An example resulting config might look something like this:
+
+```
+module.exports = {
+  env: {
+    es2020: true,
+    node: true,
+  },
+  extends: [
+    'airbnb-base',
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  plugins: [
+    '@typescript-eslint',
+  ],
+  rules: {
+  },
+};
+```
+
+Add a "lint" script to your `package.json` which runs the command `eslint 'src/**/*.ts'`. Running this script should show you an overview of all linting errors and warnings, their location and their reason. Adding a "lint:fix" script with content `eslint 'src/**/*.ts' --fix` will save you the manual work of fixing auto-fixable problems. This script will try to fix as many errors and warning as can be done automatically.
+
+Sometimes you will want to slightly tweak [the ESLint rules](https://eslint.org/docs/rules/) to suit your tastes. An example we will add here is changing [the "dangling comma" rule](https://eslint.org/docs/rules/comma-dangle) to never allow dangling commas. This can be achieved by adding a rule to the `rules` block in `.eslintrc.js`:
+
+```
+  rules: {
+    "comma-dangle": ["error", "never"]
+  }
+```
+
+Using ESLint in combination with an IDE plugin often helps keeping code quality high and style consistent by immediatly showing any linting errors in the code.
+
+## Summary
+
+You should now have a TypeScript project that runs in `ts-node` and can be bundled to run on any Node.js-capable system. The source code is linted with ESLint and tests are added with the Jest framework. The source code for the project is pushed to an online git repository to allow for easy collaboration.
