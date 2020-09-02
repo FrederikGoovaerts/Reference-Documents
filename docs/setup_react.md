@@ -26,8 +26,8 @@ See the [general prerequisites](/docs#general-prerequisites-for-practical-guides
 In the development folder, use the `mkdir` command to create an empty folder and navigate to it in your terminal.
 
 ```
-mkdir nodejs-project-setup
-cd nodejs-project-setup
+mkdir react-project-setup
+cd react-project-setup
 ```
 
 ## Create git repository
@@ -96,7 +96,7 @@ npm run start
 Add the necessary dependencies to the project. The `@types/node` package should be pinned to the version of `node` that is present on your system. In this example it is pinned for Node.js 14:
 
 ```
-npm install -D typescript ts-node @types/node@14
+npm install -D typescript @types/node@14
 ```
 
 Now run the following command to create a `tsconfig.json` file with sane defaults:
@@ -105,7 +105,7 @@ Now run the following command to create a `tsconfig.json` file with sane default
 npx tsc --init
 ```
 
-Now change the extension on the `src/index.js` for to `.ts`. The "start" script will not work anymore since there is no more JavaScript code in our project to run in the Node.js runtime. We will use a TypeScript-compatible runtime called `ts-node` to run TypeScript code without transpiling first. Change the "start" script to `ts-node src/index.ts`. The script should now run the code again. Feel free to add some TypeScript-only constructs like typings to the `src/index.ts` file to make sure it cannot run in a normal Node.js runtime.
+Now change the extension on the `src/index.js` for to `.ts`. The "start" script will not work anymore since there is no more JavaScript code in our project to run in the Node.js runtime. We will fix this start script when we are [configuring Webpack](#adding-webpack).
 
 ## Adding React
 

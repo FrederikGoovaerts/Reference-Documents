@@ -9,6 +9,7 @@ The documents hosted on this website are meant to offer a reference when tacklin
 
 - [Setting up a new Node.js project using `npm`](/docs/setup_nodejs)
 - [Setting up a new JavaScript browser library project using `npm`](/docs/setup_nodejs#addendum---setting-up-a-browser-library)
+- [Setting up a new React project using `npm`](docs/setup_react)
 
 ## Recommendations when following these documents
 
