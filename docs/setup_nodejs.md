@@ -147,6 +147,10 @@ npm install lodash
 npm install -D @types/lodash
 ```
 
+:::note
+The `lodash` library is a CommonJS module, as are many others in the `npm` ecosystem. The import syntax we will use is the ES-syntax and is not natively supported by Node.js, which expects script to be written in CommonJS. `ts-node` will perform the necessary transpilation based on `tsconfig.json`. In most cases, keeping the `compilerOptions.module` as `'commonjs'` is a good idea to maximise compatibility.
+:::
+
 Now change the contents of `src/index.ts` to the following to use the new dependency:
 
 ```ts
@@ -156,8 +160,6 @@ console.log(
   `expecting ${JSON.stringify(flatten(["a", ["b"]]))} to result in ["a","b"]`
 );
 ```
-
-Since we are using ES6 import syntax, you should change the `module` value in the `compilerOptions` of `tsconfig.json` to `es2015` or a more recent variant. This is important when the bundler resolves imports.
 
 Now install Rollup and necessary dependencies into the project with:
 
@@ -179,10 +181,15 @@ export default {
   output: {
     file: "dist/bundle.js",
     format: "cjs",
+    exports: "auto"
   },
-  plugins: [resolve(), commonJs(), typescript()],
+  plugins: [resolve(), commonJs({ extensions: [".js", ".ts"] }), typescript()],
 };
 ```
+
+:::note
+The output format is `"cjs"` (CommonJS) as per the note above, which allows execution in a NodeJS environment. To resolve module imports in CommonJS syntax, a combination of plugins is added to allow for correct bundling of node modules.
+:::
 
 Add a "build" script to your `package.json` which runs `rollup -c ./rollup.config.js`. Running this script will output a `dist/bundle.js` file, which you can run with `node ./dist/bundle.js`. As mentioned before, it will run on any Node.js-capable system without the need of installing dependencies, having a TypeScript runtime etc.
 
