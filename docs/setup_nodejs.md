@@ -181,7 +181,7 @@ export default {
   output: {
     file: "dist/bundle.js",
     format: "cjs",
-    exports: "auto"
+    exports: "auto",
   },
   plugins: [resolve(), commonJs({ extensions: [".js", ".ts"] }), typescript()],
 };
@@ -208,25 +208,20 @@ npx eslint --init
 
 An example resulting config might look something like this:
 
-```
+```js
 module.exports = {
   env: {
     es2020: true,
     node: true,
   },
-  extends: [
-    'airbnb-base',
-  ],
-  parser: '@typescript-eslint/parser',
+  extends: ["airbnb-base"],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: "module",
   },
-  plugins: [
-    '@typescript-eslint',
-  ],
-  rules: {
-  },
+  plugins: ["@typescript-eslint"],
+  rules: {},
 };
 ```
 
@@ -245,3 +240,18 @@ Using ESLint in combination with an IDE plugin often helps keeping code quality 
 ## Summary
 
 You should now have a TypeScript project that runs in `ts-node` and can be bundled to run on any Node.js-capable system. The source code is linted with ESLint and tests are added with the Jest framework. The source code for the project is pushed to an online git repository to allow for easy collaboration.
+
+## Addendum - Setting up a browser library
+
+When setting up a project where you write a JavaScript/TypeScript library which should be served as a JavaScript bundle in a browser, you can follow most of the guide as it is presented here. If your script will only expose new objects and not actively do anything, setting up a "start" script which runs `ts-node` might be irrelevant.
+
+The Rollup step will be important to bundle your code into one `.js` file. The output in the Rollup config should instead be defined as
+
+```js
+  output: {
+    file: "dist/bundle.js",
+    format: "iife"
+  },
+```
+
+This will make the bundle contain a self-executing bundle which will execute the code in your entrypoint once the bundle is loaded in the browser.

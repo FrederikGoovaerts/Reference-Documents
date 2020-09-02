@@ -8,6 +8,7 @@ slug: /
 The documents hosted on this website are meant to offer a reference when tackling the topics that are presented either when parcticing or in real situations. Currently, the covered topics are:
 
 - [Setting up a new Node.js project using `npm`](/docs/setup_nodejs)
+- [Setting up a new JavaScript browser library project using `npm`](/docs/setup_nodejs#addendum---setting-up-a-browser-library)
 
 ## Recommendations when following these documents
 
