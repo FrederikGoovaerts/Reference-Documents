@@ -4,7 +4,7 @@ module.exports = {
     {
       type: "category",
       label: "Practical",
-      items: ["setup_nodejs"],
+      items: ["setup_nodejs", "setup_react"],
     },
   ],
 };
