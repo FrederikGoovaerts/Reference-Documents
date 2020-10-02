@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/aa0f555e-a76b-43be-b829-2d46e9f072c8/deploy-status)](https://app.netlify.com/sites/reference-documents/deploys)
+
 # Reference Documents
 
 A collection of documents I like to use when explaining stuff to people. The static website is generated with [Docusaurus](https://v2.docusaurus.io/).
