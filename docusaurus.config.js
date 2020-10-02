@@ -9,7 +9,7 @@ module.exports = {
   projectName: "Guides", // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: "Tutoring documents",
+      title: "Reference documents",
     },
   },
   presets: [

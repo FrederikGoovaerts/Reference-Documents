@@ -1,33 +1,21 @@
-# Website
+# Reference Documents
 
-This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
+A collection of documents I like to use when explaining stuff to people. The static website is generated with [Docusaurus](https://v2.docusaurus.io/).
 
-### Installation
-
-```
-$ yarn
-```
-
-### Local Development
+### To run
 
 ```
-$ yarn start
+$ npm install
+$ npm run start
 ```
 
-This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
+This starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
 
-### Build
-
-```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
+### To build for hosting
 
 ```
-$ GIT_USER=<Your GitHub username> USE_SSH=true yarn deploy
+$ npm install
+$ npm run build
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+This generates static content into the `build` directory and can be served using any static contents hosting service.
