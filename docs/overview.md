@@ -9,7 +9,8 @@ The documents hosted on this website are meant to offer a reference when tacklin
 
 - [Setting up a new Node.js project using `npm`](/docs/setup_nodejs)
 - [Setting up a new JavaScript browser library project using `npm`](/docs/setup_nodejs#addendum---setting-up-a-browser-library)
-- [Setting up a new React project using `npm`](docs/setup_react)
+- [Setting up a new React project using `npm`](/docs/setup_react)
+- [Setting up WebdriverIO for browser automation testing](/docs/setup_webdriverio)
 
 ## Recommendations when following these documents
 
