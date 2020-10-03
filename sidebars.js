@@ -4,7 +4,7 @@ module.exports = {
     {
       type: "category",
       label: "Practical",
-      items: ["setup_nodejs", "setup_react"],
+      items: ["setup_nodejs", "setup_react", "setup_webdriverio"],
     },
   ],
 };

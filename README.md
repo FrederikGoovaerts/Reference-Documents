@@ -2,7 +2,7 @@
 
 # Reference Documents
 
-A collection of documents I like to use when explaining stuff to people. The static website is generated with [Docusaurus](https://v2.docusaurus.io/).
+A [collection of documents](https://reference-documents.netlify.app/docs) I like to use when explaining stuff to people. The static website is generated with [Docusaurus](https://v2.docusaurus.io/) and hosted through [Netlify](https://www.netlify.com/).
 
 ### To run
 
